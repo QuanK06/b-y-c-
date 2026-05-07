@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Bây cơ Admin - Dashboard</title>
+
+    <!-- Accessibility Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Bây Cơ Admin" />
+    <meta name="description" content="Quản trị website bánh Hương Quê" />
+
+    <!-- Fonts -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+          crossorigin="anonymous"
+          media="print"
+          onload="this.media = 'all'" />
+
+    <!-- OverlayScrollbars -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
+          crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          crossorigin="anonymous" />
+
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="dist/css/adminlte.css" />
+
+    <!-- apexcharts (cho biểu đồ) -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
+          integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
+          crossorigin="anonymous" />
+
+    <!-- jsvectormap CSS (nếu cần bản đồ) -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
+          integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4="
+          crossorigin="anonymous" />
+</head>
+
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div class="app-wrapper">
+        <!-- Header -->
+        <nav class="app-header navbar navbar-expand bg-body">
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                            <i class="bi bi-list"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-md-block">
+                        <a href="index.html" class="nav-link">Trang chủ</a>
+                    </li>
+                    <li class="nav-item d-none d-md-block">
+                        <a href="#" class="nav-link">Liên hệ</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                            <i class="bi bi-search"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="navbar-badge badge text-bg-warning" id="pendingOrdersBadge">0</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                            <span class="dropdown-item dropdown-header">Thông báo đơn hàng</span>
+                            <div class="dropdown-divider"></div>
+                            <div id="notificationList">
+                                <a href="don-dat-ban.html" class="dropdown-item">
+                                    <i class="bi bi-envelope me-2"></i> Xem tất cả đơn hàng
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-lte-toggle="fullscreen">
+                            <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+                            <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown user-menu">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img src="dist/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="Avatar" />
+                            <span class="d-none d-md-inline">Quản lý</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                            <li class="user-header text-bg-primary">
+                                <img src="dist/assets/img/user2-160x160.jpg" class="rounded-circle shadow" alt="Avatar" />
+                                <p>Quản lý cửa hàng<small>Thành viên từ 2024</small></p>
+                            </li>
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-4 text-center"><a href="#">Đơn hàng</a></div>
+                                    <div class="col-4 text-center"><a href="#">Sản phẩm</a></div>
+                                    <div class="col-4 text-center"><a href="#">Đánh giá</a></div>
+                                </div>
+                            </li>
+                            <li class="user-footer">
+                                <a href="#" class="btn btn-outline-secondary">Hồ sơ</a>
+                                <a href="#" class="btn btn-outline-danger float-end">Đăng xuất</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+            <div class="sidebar-brand">
+                <a href="index.html" class="brand-link">
+                    <img src="dist/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow" />
+                    <span class="brand-text fw-light">Hương Quê Admin</span>
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <nav class="mt-2">
+                    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" id="navigation">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link active">
+                                <i class="nav-icon bi bi-house-fill"></i>
+                                <p>Trang chủ</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <p>Danh mục <i class="nav-arrow bi bi-chevron-right"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="mon-an.html" class="nav-link">
+                                        <i class="nav-icon bi bi-egg-fried"></i>
+                                        <p>Quản lý món ăn</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="don-dat-ban.html" class="nav-link">
+                                        <i class="nav-icon bi bi-calendar-check"></i>
+                                        <p>Quản lý đặt bánh</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="danh-gia.html" class="nav-link">
+                                <i class="nav-icon bi bi-chat-square-text"></i>
+                                <p>Quản lý đánh giá</p>
+                            </a>
+                        </li>
+                        <li class="nav-header">TIỆN ÍCH</li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-gear"></i>
+                                <p>Cài đặt</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <div class="app-content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3 class="mb-0">Dashboard</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-end">
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-content">
+                <div class="container-fluid">
+                    <!-- Thống kê từ localStorage -->
+                    <div class="row" id="statsRow">
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box text-bg-primary">
+                                <div class="inner">
+                                    <h3 id="statProducts">0</h3>
+                                    <p>Tổng sản phẩm</p>
+                                </div>
+                                <i class="bi bi-box-seam small-box-icon"></i>
+                                <a href="mon-an.html" class="small-box-footer link-light">Xem chi tiết <i class="bi bi-link-45deg"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box text-bg-success">
+                                <div class="inner">
+                                    <h3 id="statOrders">0</h3>
+                                    <p>Tổng đơn hàng</p>
+                                </div>
+                                <i class="bi bi-cart-check small-box-icon"></i>
+                                <a href="don-dat-ban.html" class="small-box-footer link-light">Xem chi tiết <i class="bi bi-link-45deg"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box text-bg-warning">
+                                <div class="inner">
+                                    <h3 id="statPending">0</h3>
+                                    <p>Đơn chờ xử lý</p>
+                                </div>
+                                <i class="bi bi-hourglass-split small-box-icon"></i>
+                                <a href="don-dat-ban.html" class="small-box-footer link-dark">Xem chi tiết <i class="bi bi-link-45deg"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <div class="small-box text-bg-danger">
+                                <div class="inner">
+                                    <h3 id="statReviews">0</h3>
+                                    <p>Đánh giá chưa duyệt</p>
+                                </div>
+                                <i class="bi bi-chat-square-text small-box-icon"></i>
+                                <a href="danh-gia.html" class="small-box-footer link-light">Xem chi tiết <i class="bi bi-link-45deg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biểu đồ (giữ nguyên demo) -->
+                    <div class="row">
+                        <div class="col-lg-7 connectedSortable">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h3 class="card-title">Doanh thu (mẫu)</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="revenue-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 connectedSortable">
+                            <div class="card text-white bg-primary bg-gradient border-primary mb-4">
+                                <div class="card-header border-0">
+                                    <h3 class="card-title">Bản đồ thế giới (demo)</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="world-map" style="height: 220px"></div>
+                                </div>
+                                <div class="card-footer border-0">
+                                    <div class="row">
+                                        <div class="col-4 text-center">
+                                            <div id="sparkline-1" class="text-dark"></div>
+                                            <div class="text-white">Visitors</div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div id="sparkline-2" class="text-dark"></div>
+                                            <div class="text-white">Online</div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <div id="sparkline-3" class="text-dark"></div>
+                                            <div class="text-white">Sales</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="float-end d-none d-sm-inline">Quản lý bánh ngon mỗi ngày</div>
+            <strong>Copyright &copy; 2024 Hương Quê.</strong> All rights reserved.
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="dist/js/adminlte.js"></script>
+
+    <!-- Các script cần cho dashboard (apexcharts, jsvectormap, sortable) -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" crossorigin="anonymous"></script>
+    <script>
+        new Sortable(document.querySelector('.connectedSortable'), {
+            group: 'shared',
+            handle: '.card-header',
+        });
+        document.querySelectorAll('.connectedSortable .card-header').forEach(el => el.style.cursor = 'move');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js" crossorigin="anonymous"></script>
+    <script>
+        // Biểu đồ doanh thu (demo)
+        const sales_chart_options = {
+            series: [{ name: 'Bánh ngọt', data: [28, 48, 40, 19, 86, 27, 90] }, { name: 'Bánh mì', data: [65, 59, 80, 81, 56, 55, 40] }],
+            chart: { height: 300, type: 'area', toolbar: { show: false } },
+            legend: { show: false },
+            colors: ['#0d6efd', '#20c997'],
+            dataLabels: { enabled: false },
+            stroke: { curve: 'smooth' },
+            xaxis: { type: 'datetime', categories: ['2023-01-01', '2023-02-01', '2023-03-01', '2023-04-01', '2023-05-01', '2023-06-01', '2023-07-01'] },
+            tooltip: { x: { format: 'MMMM yyyy' } }
+        };
+        new ApexCharts(document.querySelector('#revenue-chart'), sales_chart_options).render();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js" crossorigin="anonymous"></script>
+    <script>
+        new jsVectorMap({ selector: '#world-map', map: 'world' });
+        const sparkOptions = (data) => ({
+            series: [{ data }],
+            chart: { type: 'area', height: 50, sparkline: { enabled: true } },
+            stroke: { curve: 'straight' },
+            fill: { opacity: 0.3 },
+            yaxis: { min: 0 },
+            colors: ['#DCE6EC']
+        });
+        new ApexCharts(document.querySelector('#sparkline-1'), sparkOptions([1000, 1200, 920, 927, 931, 1027, 819, 930, 1021])).render();
+        new ApexCharts(document.querySelector('#sparkline-2'), sparkOptions([515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921])).render();
+        new ApexCharts(document.querySelector('#sparkline-3'), sparkOptions([15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21])).render();
+    </script>
+
+    <!-- Thống kê từ localStorage -->
+    <script>
+        function updateStats() {
+            const products = JSON.parse(localStorage.getItem('bakery_products')) || [];
+            const orders = JSON.parse(localStorage.getItem('bakery_orders')) || [];
+            const reviews = JSON.parse(localStorage.getItem('bakery_reviews')) || [];
+
+            document.getElementById('statProducts').textContent = products.length;
+            document.getElementById('statOrders').textContent = orders.length;
+            document.getElementById('statPending').textContent = orders.filter(o => o.status === 'pending').length;
+            document.getElementById('statReviews').textContent = reviews.filter(r => !r.approved).length;
+
+            // Cập nhật badge thông báo đơn chờ xử lý
+            const badge = document.getElementById('pendingOrdersBadge');
+            if (badge) {
+                const pending = orders.filter(o => o.status === 'pending').length;
+                badge.textContent = pending;
+                badge.style.display = pending > 0 ? 'inline' : 'none';
+            }
+
+            // Cập nhật danh sách thông báo (nếu muốn)
+            const notifList = document.getElementById('notificationList');
+            if (notifList && orders.length) {
+                notifList.innerHTML = orders.filter(o => o.status === 'pending').slice(0, 3).map(o =>
+                    `<a href="don-dat-ban.html" class="dropdown-item">
+                  <i class="bi bi-cart me-2"></i> ${o.name} đặt ${o.product} (${o.quantity})
+                  <span class="float-end text-muted">${o.date}</span>
+                </a>`
+                ).join('') + '<div class="dropdown-divider"></div><a href="don-dat-ban.html" class="dropdown-item">Xem tất cả đơn hàng</a>';
+            }
+        }
+
+        // Cập nhật khi load và khi có thay đổi từ tab khác
+        document.addEventListener('DOMContentLoaded', updateStats);
+        window.addEventListener('storage', updateStats);
+    </script>
+</body>
+</html>

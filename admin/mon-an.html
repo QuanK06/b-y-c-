@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Quản lý món ăn | Hương Quê Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="dist/css/adminlte.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+</head>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div class="app-wrapper">
+        <!-- Header -->
+        <nav class="app-header navbar navbar-expand bg-body">
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#"><i class="bi bi-list"></i></a></li>
+                    <li class="nav-item d-none d-md-block"><a href="index.html" class="nav-link">Trang chủ Admin</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" data-widget="navbar-search" href="#"><i class="bi bi-search"></i></a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-bs-toggle="dropdown" href="#"><i class="bi bi-bell-fill"></i><span class="navbar-badge badge text-bg-warning" id="pendingBadge">0</span></a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                            <span class="dropdown-item dropdown-header">Thông báo</span><div class="dropdown-divider"></div>
+                            <a href="don-dat-ban.html" class="dropdown-item">Xem đơn hàng</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-lte-toggle="fullscreen"><i class="bi bi-arrows-fullscreen"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+            <div class="sidebar-brand">
+                <a href="index.html" class="brand-link">
+                    <img src="dist/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow">
+                    <span class="brand-text fw-light">Hương Quê Admin</span>
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <nav class="mt-2">
+                    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" id="navigation">
+                        <li class="nav-item"><a href="index.html" class="nav-link"><i class="nav-icon bi bi-house-fill"></i><p>Trang chủ</p></a></li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link active"><i class="nav-icon bi bi-box-seam-fill"></i><p>Danh mục <i class="nav-arrow bi bi-chevron-right"></i></p></a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"><a href="mon-an.html" class="nav-link active"><i class="nav-icon bi bi-egg-fried"></i><p>Quản lý món ăn</p></a></li>
+                                <li class="nav-item"><a href="don-dat-ban.html" class="nav-link"><i class="nav-icon bi bi-calendar-check"></i><p>Quản lý đặt bánh</p></a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="danh-gia.html" class="nav-link"><i class="nav-icon bi bi-chat-square-text"></i><p>Quản lý đánh giá</p></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="app-main">
+            <div class="app-content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6"><h3 class="mb-0">Quản lý món ăn</h3></div>
+                        <div class="col-sm-6"><ol class="breadcrumb float-sm-end"><li class="breadcrumb-item"><a href="#">Trang chủ</a></li><li class="breadcrumb-item active">Món ăn</li></ol></div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" onclick="resetForm()"><i class="bi bi-plus-lg"></i> Thêm món ăn</button>
+                        </div>
+                        <div class="card-body">
+                            <table id="productTable" class="table table-bordered table-striped">
+                                <thead><tr><th>STT</th><th>Hình ảnh</th><th>Tên món</th><th>Giá</th><th>Mô tả</th><th>Thao tác</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="app-footer"><div class="float-end d-none d-sm-inline">Quản lý bánh ngon mỗi ngày</div><strong>Copyright &copy; 2024 Hương Quê.</strong> All rights reserved.</footer>
+    </div>
+
+    <!-- Modal thêm/sửa -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title" id="modalTitle">Thêm món ăn</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form id="productForm">
+                        <input type="hidden" id="productId">
+                        <div class="mb-3"><label class="form-label">Tên món</label><input type="text" class="form-control" id="productName" required></div>
+                        <div class="mb-3"><label class="form-label">Giá (VNĐ)</label><input type="number" class="form-control" id="productPrice" required></div>
+                        <div class="mb-3"><label class="form-label">Mô tả</label><textarea class="form-control" id="productDesc" rows="3"></textarea></div>
+                        <div class="mb-3"><label class="form-label">Hình ảnh</label><input type="file" class="form-control" id="productImage" accept="image/*" onchange="previewImage(event)"><img id="imagePreview" src="#" class="img-thumbnail mt-2" style="max-width:200px; display:none;"></div>
+                    </form>
+                </div>
+                <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button><button class="btn btn-primary" onclick="saveProduct()">Lưu</button></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="dist/js/adminlte.js"></script>
+    <script>
+  let products = JSON.parse(localStorage.getItem('bakery_products')) || [
+    { id: 1, name: 'Bánh mì', price: 15000, desc: 'Giòn tan thơm ngon', image: 'img/product-2.jpg' },
+    { id: 2, name: 'Bánh kem', price: 250000, desc: 'Tươi ngon nhiều vị', image: 'img/product-1.jpg' },
+    { id: 3, name: 'Bánh quy', price: 50000, desc: 'Bơ sữa béo ngậy', image: 'img/product-3.jpg' }
+  ];
+  let editingId = null;
+
+  const table = $('#productTable').DataTable({
+    data: products,
+    columns: [
+      { data: null, render: (data, type, row, meta) => meta.row + 1 },
+      { data: 'image', render: img => img ? `<img src="${img}" height="40" class="rounded">` : '' },
+      { data: 'name' },
+      { data: 'price', render: p => p.toLocaleString('vi-VN') + ' ₫' },
+      { data: 'desc' },
+      { data: null, render: (data, type, row) => `
+          <button class="btn btn-sm btn-warning me-1" onclick="editProduct(${row.id})"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-danger" onclick="deleteProduct(${row.id})"><i class="bi bi-trash"></i></button>` }
+    ],
+    language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' }
+  });
+
+  function saveToStorage() { localStorage.setItem('bakery_products', JSON.stringify(products)); }
+  function refreshTable() { table.clear().rows.add(products).draw(); }
+
+  function resetForm() {
+    document.getElementById('productForm').reset();
+    document.getElementById('productId').value = '';
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('modalTitle').textContent = 'Thêm món ăn';
+    editingId = null;
+  }
+
+  function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      document.getElementById('imagePreview').src = reader.result;
+      document.getElementById('imagePreview').style.display = 'block';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  function saveProduct() {
+    const name = document.getElementById('productName').value.trim();
+    const price = parseInt(document.getElementById('productPrice').value);
+    const desc = document.getElementById('productDesc').value.trim();
+    const fileInput = document.getElementById('productImage');
+    let imageData = '';
+
+    const finish = (img) => {
+      if (!name || isNaN(price)) { alert('Vui lòng nhập đầy đủ tên và giá'); return; }
+      if (editingId) {
+        const idx = products.findIndex(p => p.id === editingId);
+        if (idx !== -1) products[idx] = { ...products[idx], name, price, desc, image: img || products[idx].image };
+      } else {
+        const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
+        products.push({ id: newId, name, price, desc, image: img || '' });
+      }
+      saveToStorage(); refreshTable(); bootstrap.Modal.getInstance('#productModal').hide();
+    };
+
+    if (fileInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => finish(e.target.result);
+      reader.readAsDataURL(fileInput.files[0]);
+    } else {
+      if (editingId) { const old = products.find(p => p.id === editingId); finish(old ? old.image : ''); }
+      else finish('');
+    }
+  }
+
+  function editProduct(id) {
+    const p = products.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('productId').value = p.id;
+    document.getElementById('productName').value = p.name;
+    document.getElementById('productPrice').value = p.price;
+    document.getElementById('productDesc').value = p.desc;
+    const preview = document.getElementById('imagePreview');
+    if (p.image) { preview.src = p.image; preview.style.display = 'block'; }
+    else preview.style.display = 'none';
+    document.getElementById('modalTitle').textContent = 'Sửa món ăn';
+    editingId = id;
+    new bootstrap.Modal('#productModal').show();
+  }
+
+  function deleteProduct(id) {
+    if (confirm('Xóa món này?')) { products = products.filter(p => p.id !== id); saveToStorage(); refreshTable(); }
+  }
+
+  // Lưu mặc định nếu chưa có
+  if (!localStorage.getItem('bakery_products')) saveToStorage();
+    </script>
+</body>
+</html>
