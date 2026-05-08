@@ -420,7 +420,7 @@
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="text-primary text-uppercase mb-2">// Đánh Giá Khách Hàng</p>
-                <h1 class="display-6 mb-4">Hơn 20000+ Khách Hàng Đã Tin Tưởng</h1>
+                <h1 class="display-6 mb-4">Cảm Ơn Khách Hàng Đã Tin Tưởng</h1>
             </div>
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s" id="testimonialContainer">
                 <div class="testimonial-item bg-white rounded p-4">
@@ -530,6 +530,13 @@
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="rating" id="rating5" value="5" checked>
                                     <label class="form-check-label" for="rating5">5⭐</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="reviewImage" class="form-label">Ảnh đính kèm (tùy chọn)</label>
+                                    <input class="form-control" type="file" id="reviewImage" accept="image/*" onchange="previewReviewImage(event)">
+                                    <img id="reviewPreview" src="#" class="img-thumbnail mt-2" style="max-width:150px; display:none;">
                                 </div>
                             </div>
                             <div class="col-12 text-center">
@@ -712,24 +719,24 @@
                 colDiv.setAttribute('data-wow-delay', '0.1s');
 
                 colDiv.innerHTML = `
-                              <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                                <div class="text-center p-4">
-                                  <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
-                                    ${p.price.toLocaleString('vi-VN')} ₫
+                                  <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
+                                    <div class="text-center p-4">
+                                      <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
+                                        ${p.price.toLocaleString('vi-VN')} ₫
+                                      </div>
+                                      <h3 class="mb-3">${p.name}</h3>
+                                      <span>${p.desc || ''}</span>
+                                    </div>
+                                    <div class="position-relative mt-auto">
+                                      <img class="img-fluid" src="${p.image || 'img/default.jpg'}" alt="${p.name}">
+                                      <div class="product-overlay">
+                                        <a class="btn btn-lg-square btn-outline-light rounded-circle" href="">
+                                          <i class="fa fa-eye text-primary"></i>
+                                        </a>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <h3 class="mb-3">${p.name}</h3>
-                                  <span>${p.desc || ''}</span>
-                                </div>
-                                <div class="position-relative mt-auto">
-                                  <img class="img-fluid" src="${p.image || 'img/default.jpg'}" alt="${p.name}">
-                                  <div class="product-overlay">
-                                    <a class="btn btn-lg-square btn-outline-light rounded-circle" href="">
-                                      <i class="fa fa-eye text-primary"></i>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                            `;
+                                `;
                 container.appendChild(colDiv);
             });
 
@@ -742,11 +749,26 @@
         // Chạy khi trang đã load xong
         document.addEventListener('DOMContentLoaded', loadProductsToWebsite);
     </script>
-    <!--đánh giá khách hàng-->
+
+
     <script>
+        // Preview ảnh trước khi upload
+        function previewReviewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const preview = document.getElementById('reviewPreview');
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            };
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
         document.getElementById('reviewForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const rating = document.querySelector('input[name="rating"]:checked').value;
+            const fileInput = document.getElementById('reviewImage');
             const review = {
                 id: Date.now(),
                 name: document.getElementById('reviewName').value.trim(),
@@ -754,13 +776,71 @@
                 message: document.getElementById('reviewMessage').value.trim(),
                 rating: parseInt(rating),
                 date: new Date().toLocaleString('vi-VN'),
-                approved: true
+                approved: true,   // tự động hiển thị
+                image: ''          // sẽ chứa base64 nếu có ảnh
             };
+
+            // Nếu có chọn file, đọc thành base64 rồi lưu
+            if (fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    review.image = e.target.result;
+                    saveReview(review);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveReview(review);
+            }
+        });
+
+        function saveReview(review) {
             const reviews = JSON.parse(localStorage.getItem('bakery_reviews')) || [];
             reviews.push(review);
             localStorage.setItem('bakery_reviews', JSON.stringify(reviews));
-            alert('Cảm ơn bạn đã đánh giá! Đánh giá của bạn sẽ được duyệt trước khi hiển thị.');
-            this.reset();
+            alert('Cảm ơn bạn đã đánh giá!');
+            document.getElementById('reviewForm').reset();
+            document.getElementById('reviewPreview').style.display = 'none';
+        }
+    </script>
+    <!--đánh giá khách hàng-->
+    <script>
+        document.getElementById('reviewForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const rating = document.querySelector('input[name="rating"]:checked').value;
+            const fileInput = document.getElementById('reviewImage');
+
+            const review = {
+                id: Date.now(),
+                name: document.getElementById('reviewName').value.trim(),
+                profession: document.getElementById('reviewProfession').value.trim(),
+                message: document.getElementById('reviewMessage').value.trim(),
+                rating: parseInt(rating),
+                date: new Date().toLocaleString('vi-VN'),
+                approved: true,    // hiển thị luôn
+                image: ''           // sẽ chứa base64 nếu có ảnh
+            };
+
+            // Hàm lưu vào localStorage
+            const saveReview = (reviewData) => {
+                const reviews = JSON.parse(localStorage.getItem('bakery_reviews')) || [];
+                reviews.push(reviewData);
+                localStorage.setItem('bakery_reviews', JSON.stringify(reviews));
+                alert('Cảm ơn bạn đã đánh giá!');
+                document.getElementById('reviewForm').reset();
+                document.getElementById('reviewPreview').style.display = 'none';
+            };
+
+            // Nếu có chọn file, đọc ảnh base64 rồi lưu; không thì lưu luôn
+            if (fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    review.image = e.target.result;
+                    saveReview(review);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                saveReview(review);
+            }
         });
     </script>
 
@@ -772,18 +852,21 @@
             const container = document.getElementById('testimonialContainer');
             if (!container) return;
             container.innerHTML = approved.map(r => `
-                                <div class="testimonial-item bg-white rounded p-4">
-                                    <div class="d-flex align-items-center mb-4">
-                                        <img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-1.jpg" alt="">
-                                        <div class="ms-4">
-                                            <h5 class="mb-1">${r.name}</h5>
-                                            <span>${r.profession || ''}</span>
+                                    <div class="testimonial-item bg-white rounded p-4">
+                                        <div class="d-flex align-items-center mb-4">
+                                           ${r.image
+                    ? `<img class="flex-shrink-0 rounded-circle border p-1" src="${r.image}" alt="${r.name}" style="width:60px; height:60px; object-fit:cover;">`
+                    : `<img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-1.jpg" alt="">`
+                                               }
+                                            <div class="ms-4">
+                                                <h5 class="mb-1">${r.name}</h5>
+                                                <span>${r.profession || ''}</span>
+                                            </div>
                                         </div>
+                                        <p class="mb-0">${r.message}</p>
+                                        <div class="mt-2">${'⭐'.repeat(r.rating)}</div>
                                     </div>
-                                    <p class="mb-0">${r.message}</p>
-                                    <div class="mt-2">${'⭐'.repeat(r.rating)}</div>
-                                </div>
-                            `).join('');
+                                `).join('');
             // Khởi tạo lại Owl Carousel
             if ($('.testimonial-carousel').hasClass('owl-loaded')) {
                 $('.testimonial-carousel').trigger('destroy.owl.carousel');
