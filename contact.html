@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Baker - Bakery Website Template</title>
+    <title>Bây cơ Website</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -109,50 +109,37 @@
     </div>
     <!-- Page Header End -->
     <!-- Contact Start -->
-    <div class="container-xxl py-6">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="text-primary text-uppercase mb-2">// Contact Us</p>
-                <h1 class="display-6 mb-4">If You Have Any Query, Please Contact Us</h1>
-            </div>
-            <div class="row g-0 justify-content-center">
-                <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="text-center mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                    <label for="email">Your Email</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    <label for="subject">Subject</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 200px"></textarea>
-                                    <label for="message">Message</label>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center">
-                                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Send Message</button>
-                            </div>
-                        </div>
-                    </form>
+    <form id="contactForm">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="contactName" placeholder="Họ và tên" required>
+                    <label for="contactName">Họ và tên</label>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="contactEmail" placeholder="Email" required>
+                    <label for="contactEmail">Email</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="contactSubject" placeholder="Tiêu đề" required>
+                    <label for="contactSubject">Tiêu đề</label>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Nội dung" id="contactMessage" style="height: 200px" required></textarea>
+                    <label for="contactMessage">Nội dung</label>
+                </div>
+            </div>
+            <div class="col-12 text-center">
+                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Gửi Liên Hệ</button>
+            </div>
         </div>
-    </div>
+    </form>
     <!-- Contact End -->
     <!-- Google Map Start -->
     <div class="container-xxl py-6 px-0 wow fadeInUp" data-wow-delay="0.1s">
@@ -250,6 +237,27 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+   
+    <script>
+        // Contact Form Handling 
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const contact = {
+                id: Date.now(),
+                name: document.getElementById('contactName').value.trim(),
+                email: document.getElementById('contactEmail').value.trim(),
+                subject: document.getElementById('contactSubject').value.trim(),
+                message: document.getElementById('contactMessage').value.trim(),
+                date: new Date().toLocaleString('vi-VN'),
+                status: 'pending' // pending, resolved
+            };
+            const contacts = JSON.parse(localStorage.getItem('bakery_contacts')) || [];
+            contacts.push(contact);
+            localStorage.setItem('bakery_contacts', JSON.stringify(contacts));
+            alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm.');
+            this.reset();
+        });
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Quản lý lương | Bây cơ Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font + CSS giống các trang admin khác -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="dist/css/adminlte.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+</head>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div class="app-wrapper">
+        <!-- Header -->
+        <nav class="app-header navbar navbar-expand bg-body">
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" data-lte-toggle="sidebar" href="#"><i class="bi bi-list"></i></a></li>
+                    <li class="nav-item d-none d-md-block"><a href="index.html" class="nav-link">Trang chủ Admin</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" data-widget="navbar-search" href="#"><i class="bi bi-search"></i></a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-bs-toggle="dropdown" href="#"><i class="bi bi-bell-fill"></i><span class="navbar-badge badge text-bg-warning">0</span></a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                            <span class="dropdown-item dropdown-header">Thông báo</span><div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Xem tất cả</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#" data-lte-toggle="fullscreen"><i class="bi bi-arrows-fullscreen"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+            <div class="sidebar-brand">
+                <a href="index.html" class="brand-link">
+                    <img src="dist/assets/img/AdminLTELogo.png" alt="Logo" class="brand-image opacity-75 shadow">
+                    <span class="brand-text fw-light">Bây cơ Admin</span>
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <nav class="mt-2">
+                    <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" id="navigation">
+                        <li class="nav-item"><a href="index.html" class="nav-link"><i class="nav-icon bi bi-house-fill"></i><p>Trang chủ</p></a></li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><i class="nav-icon bi bi-box-seam-fill"></i><p>Danh mục <i class="nav-arrow bi bi-chevron-right"></i></p></a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item"><a href="mon-an.html" class="nav-link"><i class="nav-icon bi bi-egg-fried"></i><p>Quản lý món ăn</p></a></li>
+                                <li class="nav-item"><a href="don-dat-ban.html" class="nav-link"><i class="nav-icon bi bi-calendar-check"></i><p>Quản lý đặt bánh</p></a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="danh-gia.html" class="nav-link"><i class="nav-icon bi bi-chat-square-text"></i><p>Quản lý đánh giá</p></a></li>
+                        <li class="nav-item"><a href="lien-he.html" class="nav-link"><i class="nav-icon bi bi-envelope"></i><p>Quản lý liên hệ</p></a></li>
+                        <li class="nav-item"><a href="luong.html" class="nav-link active"><i class="nav-icon bi bi-cash-coin"></i><p>Quản lý lương</p></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="app-main">
+            <div class="app-content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6"><h3 class="mb-0">Quản lý lương nhân viên</h3></div>
+                        <div class="col-sm-6"><ol class="breadcrumb float-sm-end"><li class="breadcrumb-item"><a href="#">Trang chủ</a></li><li class="breadcrumb-item active">Lương</li></ol></div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#salaryModal" onclick="resetSalaryForm()"><i class="bi bi-plus-lg"></i> Thêm hồ sơ lương</button>
+                        </div>
+                        <div class="card-body">
+                            <table id="salaryTable" class="table table-bordered table-striped">
+                                <thead><tr><th>ID</th><th>Nhân viên</th><th>Chức vụ</th><th>Lương cơ bản</th><th>Thưởng</th><th>Phạt</th><th>Lý do</th><th>Tổng lương</th><th>Ngày cập nhật</th><th>Thao tác</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="app-footer"><div class="float-end d-none d-sm-inline">Quản lý bánh ngon mỗi ngày</div><strong>Copyright &copy; 2024 Bây cơ.</strong> All rights reserved.</footer>
+    </div>
+
+    <!-- Modal thêm/sửa lương -->
+    <div class="modal fade" id="salaryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title" id="salaryModalTitle">Thêm hồ sơ lương</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <form id="salaryForm">
+                        <input type="hidden" id="salaryId">
+                        <div class="mb-3"><label class="form-label">Tên nhân viên</label><input type="text" class="form-control" id="staffName" required></div>
+                        <div class="mb-3"><label class="form-label">Chức vụ</label><select class="form-select" id="staffRole"><option>Bếp trưởng</option><option>Phụ bếp</option><option>Thu ngân</option><option>Giao hàng</option></select></div>
+                        <div class="mb-3"><label class="form-label">Lương cơ bản (VNĐ)</label><input type="number" class="form-control" id="baseSalary" required></div>
+                        <div class="mb-3"><label class="form-label">Thưởng (VNĐ)</label><input type="number" class="form-control" id="bonus" value="0"></div>
+                        <div class="mb-3"><label class="form-label">Phạt / Khấu trừ (VNĐ)</label><input type="number" class="form-control" id="penalty" value="0"></div>
+                        <div class="mb-3"><label class="form-label">Lý do thưởng/phạt</label><textarea class="form-control" id="reason" rows="2"></textarea></div>
+                    </form>
+                </div>
+                <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button><button class="btn btn-primary" onclick="saveSalary()">Lưu</button></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="dist/js/adminlte.js"></script>
+    <script>
+  let salaries = JSON.parse(localStorage.getItem('bakery_salaries')) || [];
+  let editingSalaryId = null;
+
+  // DataTable
+  const table = $('#salaryTable').DataTable({
+    data: salaries,
+    columns: [
+      { data: 'id' },
+      { data: 'staffName' },
+      { data: 'role' },
+      { data: 'base', render: v => v.toLocaleString('vi-VN') + ' ₫' },
+      { data: 'bonus', render: v => v.toLocaleString('vi-VN') + ' ₫' },
+      { data: 'penalty', render: v => v.toLocaleString('vi-VN') + ' ₫' },
+      { data: 'reason', defaultContent: '' },
+      { data: null, render: row => (row.base + row.bonus - row.penalty).toLocaleString('vi-VN') + ' ₫' },
+      { data: 'date' },
+      { data: null, render: (row) => `
+          <button class="btn btn-sm btn-warning me-1" onclick="editSalary(${row.id})"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-danger" onclick="deleteSalary(${row.id})"><i class="bi bi-trash"></i></button>
+        `
+      }
+    ],
+    language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' }
+  });
+
+  function saveToStorage() { localStorage.setItem('bakery_salaries', JSON.stringify(salaries)); }
+  function refreshTable() { table.clear().rows.add(salaries).draw(); }
+
+  function resetSalaryForm() {
+    document.getElementById('salaryForm').reset();
+    document.getElementById('salaryId').value = '';
+    document.getElementById('salaryModalTitle').textContent = 'Thêm hồ sơ lương';
+    editingSalaryId = null;
+  }
+
+  function saveSalary() {
+    const name = document.getElementById('staffName').value.trim();
+    const role = document.getElementById('staffRole').value;
+    const base = parseInt(document.getElementById('baseSalary').value) || 0;
+    const bonus = parseInt(document.getElementById('bonus').value) || 0;
+    const penalty = parseInt(document.getElementById('penalty').value) || 0;
+    const reason = document.getElementById('reason').value.trim();
+    if (!name || base <= 0) { alert('Nhập tên và lương cơ bản hợp lệ'); return; }
+
+    const entry = {
+      id: editingSalaryId || Date.now(),
+      staffName: name,
+      role: role,
+      base: base,
+      bonus: bonus,
+      penalty: penalty,
+      reason: reason,
+      date: new Date().toLocaleString('vi-VN')
+    };
+
+    if (editingSalaryId) {
+      const idx = salaries.findIndex(s => s.id === editingSalaryId);
+      if (idx !== -1) salaries[idx] = entry;
+    } else {
+      salaries.push(entry);
+    }
+
+    saveToStorage();
+    refreshTable();
+    bootstrap.Modal.getInstance('#salaryModal').hide();
+  }
+
+  function editSalary(id) {
+    const s = salaries.find(x => x.id === id);
+    if (!s) return;
+    document.getElementById('salaryId').value = s.id;
+    document.getElementById('staffName').value = s.staffName;
+    document.getElementById('staffRole').value = s.role;
+    document.getElementById('baseSalary').value = s.base;
+    document.getElementById('bonus').value = s.bonus;
+    document.getElementById('penalty').value = s.penalty;
+    document.getElementById('reason').value = s.reason || '';
+    document.getElementById('salaryModalTitle').textContent = 'Sửa hồ sơ lương';
+    editingSalaryId = s.id;
+    new bootstrap.Modal('#salaryModal').show();
+  }
+
+  function deleteSalary(id) {
+    if (confirm('Xóa hồ sơ lương này?')) {
+      salaries = salaries.filter(s => s.id !== id);
+      saveToStorage();
+      refreshTable();
+    }
+  }
+
+  // Cập nhật khi storage thay đổi
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'bakery_salaries') {
+      salaries = JSON.parse(localStorage.getItem('bakery_salaries')) || [];
+      refreshTable();
+    }
+  });
+    </script>
+</body>
+</html>

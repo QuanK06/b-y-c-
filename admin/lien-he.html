@@ -2,38 +2,17 @@
 <html lang="vi">
 <head>
     <meta charset="utf-8">
-    <title>Quản lý đánh giá | Bây cơ Admin</title>
+    <title>Quản lý liên hệ | Bây cơ Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Font: Source Sans 3 - tải đúng cách như AdminLTE mẫu -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
-          crossorigin="anonymous"
-          media="print"
-          onload="this.media='all'" />
-    <!-- Dự phòng nếu font trên không load được -->
-    <style>
-        body {
-            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
-
-        .table {
-            font-size: 0.9rem;
-        }
-    </style>
-
-    <!-- OverlayScrollbars -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous">
-    <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="dist/css/adminlte.css">
-    <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 </head>
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
     <div class="app-wrapper">
-        <!-- Header -->
+        <!-- Header (giữ nguyên như các trang admin khác) -->
         <nav class="app-header navbar navbar-expand bg-body">
             <div class="container-fluid">
                 <ul class="navbar-nav">
@@ -43,10 +22,10 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" data-widget="navbar-search" href="#"><i class="bi bi-search"></i></a></li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link" data-bs-toggle="dropdown" href="#"><i class="bi bi-bell-fill"></i><span class="navbar-badge badge text-bg-warning">0</span></a>
+                        <a class="nav-link" data-bs-toggle="dropdown" href="#"><i class="bi bi-bell-fill"></i><span class="navbar-badge badge text-bg-warning" id="pendingBadge">0</span></a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <span class="dropdown-item dropdown-header">Thông báo</span><div class="dropdown-divider"></div>
-                            <a href="danh-gia.html" class="dropdown-item">Xem đánh giá</a>
+                            <span class="dropdown-item dropdown-header">Liên hệ mới</span><div class="dropdown-divider"></div>
+                            <a href="lien-he.html" class="dropdown-item">Xem tất cả</a>
                         </div>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="#" data-lte-toggle="fullscreen"><i class="bi bi-arrows-fullscreen"></i></a></li>
@@ -73,29 +52,30 @@
                                 <li class="nav-item"><a href="don-dat-ban.html" class="nav-link"><i class="nav-icon bi bi-calendar-check"></i><p>Quản lý đặt bánh</p></a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a href="danh-gia.html" class="nav-link active"><i class="nav-icon bi bi-chat-square-text"></i><p>Quản lý đánh giá</p></a></li>
+                        <li class="nav-item"><a href="danh-gia.html" class="nav-link"><i class="nav-icon bi bi-chat-square-text"></i><p>Quản lý đánh giá</p></a></li>
+                        <li class="nav-item"><a href="lien-he.html" class="nav-link active"><i class="nav-icon bi bi-envelope"></i><p>Quản lý liên hệ</p></a></li>
                     </ul>
                 </nav>
             </div>
         </aside>
 
-        <!-- Main -->
+        <!-- Main Content -->
         <main class="app-main">
             <div class="app-content-header">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6"><h3 class="mb-0">Quản lý đánh giá</h3></div>
-                        <div class="col-sm-6"><ol class="breadcrumb float-sm-end"><li class="breadcrumb-item"><a href="#">Trang chủ</a></li><li class="breadcrumb-item active">Đánh giá</li></ol></div>
+                        <div class="col-sm-6"><h3 class="mb-0">Quản lý liên hệ</h3></div>
+                        <div class="col-sm-6"><ol class="breadcrumb float-sm-end"><li class="breadcrumb-item"><a href="#">Trang chủ</a></li><li class="breadcrumb-item active">Liên hệ</li></ol></div>
                     </div>
                 </div>
             </div>
             <div class="app-content">
                 <div class="container-fluid">
                     <div class="card">
-                        <div class="card-header"><h3 class="card-title">Danh sách đánh giá</h3></div>
+                        <div class="card-header"><h3 class="card-title">Danh sách liên hệ</h3></div>
                         <div class="card-body">
-                            <table id="reviewTable" class="table table-bordered table-striped">
-                                <thead><tr><th>ID</th><th>Tên</th><th>Nghề nghiệp</th><th>Nội dung</th><th>Đánh giá</th><th>Ngày</th><th>Duyệt</th><th>Thao tác</th></tr></thead>
+                            <table id="contactTable" class="table table-bordered table-striped">
+                                <thead><tr><th>ID</th><th>Tên</th><th>Email</th><th>Tiêu đề</th><th>Nội dung</th><th>Ngày gửi</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
                                 <tbody></tbody>
                             </table>
                         </div>
@@ -113,47 +93,63 @@
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="dist/js/adminlte.js"></script>
     <script>
-        let reviews = JSON.parse(localStorage.getItem('bakery_reviews')) || [];
+  let contacts = JSON.parse(localStorage.getItem('bakery_contacts')) || [];
 
-        const table = $('#reviewTable').DataTable({
-            data: reviews,
-            columns: [
-                { data: 'id' },
-                { data: 'name' },
-                { data: 'profession' },
-                { data: 'message' },
-                { data: 'rating', render: r => '⭐'.repeat(r) },
-                { data: 'date' },
-                { data: 'approved', render: approved => approved ? '<span class="badge bg-success">Đã duyệt</span>' : '<span class="badge bg-secondary">Chưa duyệt</span>' },
-                {
-                    data: null, render: (data) => {
-                        let btns = data.approved ?
-                            `<button class="btn btn-sm btn-warning me-1" onclick="toggleApprove(${data.id},false)">Ẩn</button>` :
-                            `<button class="btn btn-sm btn-success me-1" onclick="toggleApprove(${data.id},true)">Duyệt</button>`;
-                        btns += `<button class="btn btn-sm btn-danger" onclick="deleteReview(${data.id})"><i class="bi bi-trash"></i></button>`;
-                        return btns;
-                    }
-                }
-            ],
-            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' }
-        });
+  const table = $('#contactTable').DataTable({
+    data: contacts,
+    columns: [
+      { data: 'id' },
+      { data: 'name' },
+      { data: 'email' },
+      { data: 'subject' },
+      { data: 'message' },
+      { data: 'date' },
+      { data: 'status', render: status => status === 'pending' ? '<span class="badge bg-warning">Chờ xử lý</span>' : '<span class="badge bg-success">Đã xử lý</span>' },
+      { data: null, render: (data) => {
+          let btns = '';
+          if (data.status === 'pending') btns += `<button class="btn btn-sm btn-success me-1" onclick="markResolved(${data.id})">Đánh dấu đã xử lý</button>`;
+          btns += `<button class="btn btn-sm btn-danger" onclick="deleteContact(${data.id})"><i class="bi bi-trash"></i></button>`;
+          return btns;
+      }}
+    ],
+    language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/vi.json' }
+  });
 
-        function toggleApprove(id, value) {
-            const review = reviews.find(r => r.id === id);
-            if (review) review.approved = value;
-            localStorage.setItem('bakery_reviews', JSON.stringify(reviews));
-            refreshTable();
-        }
+  function markResolved(id) {
+    const contact = contacts.find(c => c.id === id);
+    if (contact) contact.status = 'resolved';
+    localStorage.setItem('bakery_contacts', JSON.stringify(contacts));
+    refreshTable();
+  }
 
-        function deleteReview(id) {
-            if (confirm('Xóa đánh giá này?')) {
-                reviews = reviews.filter(r => r.id !== id);
-                localStorage.setItem('bakery_reviews', JSON.stringify(reviews));
-                refreshTable();
-            }
-        }
+  function deleteContact(id) {
+    if (confirm('Xóa liên hệ này?')) {
+      contacts = contacts.filter(c => c.id !== id);
+      localStorage.setItem('bakery_contacts', JSON.stringify(contacts));
+      refreshTable();
+    }
+  }
 
-        function refreshTable() { table.clear().rows.add(reviews).draw(); }
+  function refreshTable() { table.clear().rows.add(contacts).draw(); }
+
+  // Tự động cập nhật khi có thay đổi từ tab khác
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'bakery_contacts') {
+      contacts = JSON.parse(localStorage.getItem('bakery_contacts')) || [];
+      refreshTable();
+    }
+  });
+
+  // Badge thông báo
+  function updateBadge() {
+    const badge = document.getElementById('pendingBadge');
+    if (badge) {
+      const pending = contacts.filter(c => c.status === 'pending').length;
+      badge.textContent = pending;
+      badge.style.display = pending > 0 ? 'inline' : 'none';
+    }
+  }
+  updateBadge();
     </script>
 </body>
 </html>
