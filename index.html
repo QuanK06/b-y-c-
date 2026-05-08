@@ -385,7 +385,7 @@
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Nguyễn Văn B</h5>
-                                <span>Bếp trưởng</span>
+                                <span>Giao hàng</span>
                             </div>
                             <div class="team-social">
                                 <a class="btn btn-square btn-light rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
@@ -401,7 +401,7 @@
                         <div class="team-text">
                             <div class="team-title">
                                 <h5>Lê Văn Đạt</h5>
-                                <span>Phụ bếp</span>
+                                <span>Thu ngân</span>
                             </div>
                             <div class="team-social">
                                 <a class="btn btn-square btn-light rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
@@ -719,24 +719,24 @@
                 colDiv.setAttribute('data-wow-delay', '0.1s');
 
                 colDiv.innerHTML = `
-                                  <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                                    <div class="text-center p-4">
-                                      <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
-                                        ${p.price.toLocaleString('vi-VN')} ₫
+                                      <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
+                                        <div class="text-center p-4">
+                                          <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
+                                            ${p.price.toLocaleString('vi-VN')} ₫
+                                          </div>
+                                          <h3 class="mb-3">${p.name}</h3>
+                                          <span>${p.desc || ''}</span>
+                                        </div>
+                                        <div class="position-relative mt-auto">
+                                          <img class="img-fluid" src="${p.image || 'img/default.jpg'}" alt="${p.name}">
+                                          <div class="product-overlay">
+                                            <a class="btn btn-lg-square btn-outline-light rounded-circle" href="">
+                                              <i class="fa fa-eye text-primary"></i>
+                                            </a>
+                                          </div>
+                                        </div>
                                       </div>
-                                      <h3 class="mb-3">${p.name}</h3>
-                                      <span>${p.desc || ''}</span>
-                                    </div>
-                                    <div class="position-relative mt-auto">
-                                      <img class="img-fluid" src="${p.image || 'img/default.jpg'}" alt="${p.name}">
-                                      <div class="product-overlay">
-                                        <a class="btn btn-lg-square btn-outline-light rounded-circle" href="">
-                                          <i class="fa fa-eye text-primary"></i>
-                                        </a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                `;
+                                    `;
                 container.appendChild(colDiv);
             });
 
@@ -852,21 +852,21 @@
             const container = document.getElementById('testimonialContainer');
             if (!container) return;
             container.innerHTML = approved.map(r => `
-                                    <div class="testimonial-item bg-white rounded p-4">
-                                        <div class="d-flex align-items-center mb-4">
-                                           ${r.image
+                                        <div class="testimonial-item bg-white rounded p-4">
+                                            <div class="d-flex align-items-center mb-4">
+                                               ${r.image
                     ? `<img class="flex-shrink-0 rounded-circle border p-1" src="${r.image}" alt="${r.name}" style="width:60px; height:60px; object-fit:cover;">`
                     : `<img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-1.jpg" alt="">`
-                                               }
-                                            <div class="ms-4">
-                                                <h5 class="mb-1">${r.name}</h5>
-                                                <span>${r.profession || ''}</span>
+                }
+                                                <div class="ms-4">
+                                                    <h5 class="mb-1">${r.name}</h5>
+                                                    <span>${r.profession || ''}</span>
+                                                </div>
                                             </div>
+                                            <p class="mb-0">${r.message}</p>
+                                            <div class="mt-2">${'⭐'.repeat(r.rating)}</div>
                                         </div>
-                                        <p class="mb-0">${r.message}</p>
-                                        <div class="mt-2">${'⭐'.repeat(r.rating)}</div>
-                                    </div>
-                                `).join('');
+                                    `).join('');
             // Khởi tạo lại Owl Carousel
             if ($('.testimonial-carousel').hasClass('owl-loaded')) {
                 $('.testimonial-carousel').trigger('destroy.owl.carousel');
