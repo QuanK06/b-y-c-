@@ -368,8 +368,8 @@
                         <img class="img-fluid" src="img/team-2.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
-                                <h5>Full Name</h5>
-                                <span>Designation</span>
+                                <h5>Nguyễn Văn A</h5>
+                                <span>Phụ bếp</span>
                             </div>
                             <div class="team-social">
                                 <a class="btn btn-square btn-light rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
@@ -384,8 +384,8 @@
                         <img class="img-fluid" src="img/team-3.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
-                                <h5>Full Name</h5>
-                                <span>Designation</span>
+                                <h5>Nguyễn Văn B</h5>
+                                <span>Bếp trưởng</span>
                             </div>
                             <div class="team-social">
                                 <a class="btn btn-square btn-light rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
@@ -400,8 +400,8 @@
                         <img class="img-fluid" src="img/team-4.jpg" alt="">
                         <div class="team-text">
                             <div class="team-title">
-                                <h5>Full Name</h5>
-                                <span>Designation</span>
+                                <h5>Lê Văn Đạt</h5>
+                                <span>Phụ bếp</span>
                             </div>
                             <div class="team-social">
                                 <a class="btn btn-square btn-light rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
@@ -635,10 +635,10 @@
                                     <select class="form-select" id="orderProduct" required>
                                         <option value="" disabled selected>Chọn loại bánh</option>
                                         <option value="Bánh Kem">Bánh Kem</option>
-                                        <option value="Bánh Mì">Bánh Mì</option>    
+                                        <option value="Bánh Mì">Bánh Mì</option>
                                         <option value="Bánh Quy">Bánh Quy</option>
-                                           
-</select>
+
+                                    </select>
                                     <label for="orderProduct">Loại bánh</label>
                                 </div>
                             </div>
@@ -712,24 +712,24 @@
                 colDiv.setAttribute('data-wow-delay', '0.1s');
 
                 colDiv.innerHTML = `
-                      <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
-                        <div class="text-center p-4">
-                          <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
-                            ${p.price.toLocaleString('vi-VN')} ₫
-                          </div>
-                          <h3 class="mb-3">${p.name}</h3>
-                          <span>${p.desc || ''}</span>
-                        </div>
-                        <div class="position-relative mt-auto">
-                          <img class="img-fluid" src="${p.image || 'img/default.jpg'}" alt="${p.name}">
-                          <div class="product-overlay">
-                            <a class="btn btn-lg-square btn-outline-light rounded-circle" href="">
-                              <i class="fa fa-eye text-primary"></i>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    `;
+                              <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
+                                <div class="text-center p-4">
+                                  <div class="d-inline-block border border-primary rounded-pill px-3 mb-3">
+                                    ${p.price.toLocaleString('vi-VN')} ₫
+                                  </div>
+                                  <h3 class="mb-3">${p.name}</h3>
+                                  <span>${p.desc || ''}</span>
+                                </div>
+                                <div class="position-relative mt-auto">
+                                  <img class="img-fluid" src="${p.image || 'img/default.jpg'}" alt="${p.name}">
+                                  <div class="product-overlay">
+                                    <a class="btn btn-lg-square btn-outline-light rounded-circle" href="">
+                                      <i class="fa fa-eye text-primary"></i>
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            `;
                 container.appendChild(colDiv);
             });
 
@@ -754,7 +754,7 @@
                 message: document.getElementById('reviewMessage').value.trim(),
                 rating: parseInt(rating),
                 date: new Date().toLocaleString('vi-VN'),
-                approved: false
+                approved: true
             };
             const reviews = JSON.parse(localStorage.getItem('bakery_reviews')) || [];
             reviews.push(review);
@@ -772,18 +772,18 @@
             const container = document.getElementById('testimonialContainer');
             if (!container) return;
             container.innerHTML = approved.map(r => `
-                        <div class="testimonial-item bg-white rounded p-4">
-                            <div class="d-flex align-items-center mb-4">
-                                <img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-1.jpg" alt="">
-                                <div class="ms-4">
-                                    <h5 class="mb-1">${r.name}</h5>
-                                    <span>${r.profession || ''}</span>
+                                <div class="testimonial-item bg-white rounded p-4">
+                                    <div class="d-flex align-items-center mb-4">
+                                        <img class="flex-shrink-0 rounded-circle border p-1" src="img/testimonial-1.jpg" alt="">
+                                        <div class="ms-4">
+                                            <h5 class="mb-1">${r.name}</h5>
+                                            <span>${r.profession || ''}</span>
+                                        </div>
+                                    </div>
+                                    <p class="mb-0">${r.message}</p>
+                                    <div class="mt-2">${'⭐'.repeat(r.rating)}</div>
                                 </div>
-                            </div>
-                            <p class="mb-0">${r.message}</p>
-                            <div class="mt-2">${'⭐'.repeat(r.rating)}</div>
-                        </div>
-                    `).join('');
+                            `).join('');
             // Khởi tạo lại Owl Carousel
             if ($('.testimonial-carousel').hasClass('owl-loaded')) {
                 $('.testimonial-carousel').trigger('destroy.owl.carousel');
@@ -807,6 +807,84 @@
             // Cập nhật lại khi có thay đổi localStorage từ tab khác (tuỳ chọn)
             window.addEventListener('storage', loadTestimonials);
         });
+    </script>
+
+    <script>
+        // Load sản phẩm vào dropdown
+        function loadProductsSelect() {
+            const products = JSON.parse(localStorage.getItem('bakery_products')) || [];
+            const select = document.getElementById('orderProduct');
+            if (!select) return;
+            select.innerHTML = '<option value="" disabled selected>Chọn loại bánh</option>';
+            products.forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.name;
+                option.textContent = p.name + ' - ' + p.price.toLocaleString('vi-VN') + ' ₫';
+                select.appendChild(option);
+            });
+        }
+
+        // Gửi đơn hàng
+        document.getElementById('orderForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const order = {
+                id: Date.now(),
+                name: document.getElementById('orderName').value.trim(),
+                phone: document.getElementById('orderPhone').value.trim(),
+                email: document.getElementById('orderEmail').value.trim(),
+                product: document.getElementById('orderProduct').value,
+                quantity: parseInt(document.getElementById('orderQuantity').value),
+                note: document.getElementById('orderNote').value.trim(),
+                date: new Date().toLocaleString('vi-VN'),
+                status: 'pending'
+            };
+            const orders = JSON.parse(localStorage.getItem('bakery_orders')) || [];
+            orders.push(order);
+            localStorage.setItem('bakery_orders', JSON.stringify(orders));
+            alert('Đặt bánh thành công! Chúng tôi sẽ liên hệ bạn sớm.');
+            this.reset();
+        });
+
+        document.addEventListener('DOMContentLoaded', loadProductsSelect);
+    </script>
+
+    <script>
+        // Load sản phẩm vào dropdown
+        function loadProductsSelect() {
+            const products = JSON.parse(localStorage.getItem('bakery_products')) || [];
+            const select = document.getElementById('orderProduct');
+            if (!select) return;
+            select.innerHTML = '<option value="" disabled selected>Chọn loại bánh</option>';
+            products.forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.name;
+                option.textContent = p.name + ' - ' + p.price.toLocaleString('vi-VN') + ' ₫';
+                select.appendChild(option);
+            });
+        }
+
+        // Gửi đơn hàng
+        document.getElementById('orderForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const order = {
+                id: Date.now(),
+                name: document.getElementById('orderName').value.trim(),
+                phone: document.getElementById('orderPhone').value.trim(),
+                email: document.getElementById('orderEmail').value.trim(),
+                product: document.getElementById('orderProduct').value,
+                quantity: parseInt(document.getElementById('orderQuantity').value),
+                note: document.getElementById('orderNote').value.trim(),
+                date: new Date().toLocaleString('vi-VN'),
+                status: 'pending'
+            };
+            const orders = JSON.parse(localStorage.getItem('bakery_orders')) || [];
+            orders.push(order);
+            localStorage.setItem('bakery_orders', JSON.stringify(orders));
+            alert('Đặt bánh thành công!');
+            this.reset();
+        });
+
+        document.addEventListener('DOMContentLoaded', loadProductsSelect);
     </script>
 </body>
 
